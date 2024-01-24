@@ -1,0 +1,32 @@
+
+<%- include("partials/header") %>
+<h1>compose</h1>
+
+<div class="container">
+    <form action="/compose" method="post">
+        <div class="form-group">
+            <label for="">Cover</label>
+            <input class="form-control" type="text" name="postCover">
+    
+            <label for="">Title</label>
+            <input class="form-control" type="text" name="postTitle">
+    
+            <label for="">Date</label>
+            <input class="form-control" type="text" name="postDate">
+    
+            <label for="">recomendation</label>
+            <input class="form-control" type="text" name="postRec">
+
+            <label for="">ISBN</label>
+            <input class="form-control" type="text" name="postIsbn">
+    
+            <label for="">post</label>
+            <textarea class="form-control" name="postBody" id="" cols="30" rows="5"></textarea>
+    
+        </div>
+    
+        <button class="btn btn-primary" type="submit" name="button">Publish</button>
+    </form>
+
+</div>
+
