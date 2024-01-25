@@ -8,9 +8,16 @@ const _ = require("lodash");
 const app = express();
 const port = process.env.PORT || 5000;
 
+// Set my view engine to ejs
 app.set("view engine", "ejs");
+
+// To access my body-parser
 app.use(bodyparser.urlencoded({ extended: true }));
+
+// To access my public folder e.g css style
 app.use(express.static("public"));
+
+// My introduction statement
 
 const homeStartingContent = "I read a lot of books, but after finishing them, I often don't remember all the most important parts of the book. So, I started taking notes. Then I discovered that keeping my notes on physical books is tiresome. How many books will I store, considering the many books I have read? What if I misplace the book? Or what if I travel and want to brush through my notes? Therefore, here is my web app for storing my notes, book covers, and titles. This brings a solution to my problem.";
 
@@ -43,9 +50,12 @@ app.get("/", async (req, res) => {
     });
 });
 
+// getting the compose route
 app.get("/compose", (req, res) => {
     res.render("compose");
 });
+
+// route to push my post which are redirected to my home route
 
 app.post("/compose", async (req, res) => {
     const isbn = req.body.postIsbn;
@@ -65,6 +75,8 @@ app.post("/compose", async (req, res) => {
     res.redirect("/");
 });
 
+// To view individual post in a separate page
+
 app.get("/posts/:postName", (req, res)=>{
     const requestedTitle = _.lowerCase(req.params.postName);
 
@@ -83,8 +95,10 @@ app.get("/posts/:postName", (req, res)=>{
 
             })
         }
-    }) 
-})
+    }); 
+});
+
+// setting my port
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
 });
