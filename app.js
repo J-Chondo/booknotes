@@ -82,12 +82,12 @@ app.post("/compose", async (req, res) => {
         cover: cover,
         title: req.body.postTitle,
         date: new Date(),
-        recommendation: req.body.postRec,
-        content: req.body.postBody,
+        recommendation: req.body.postRec,  // Set recommendation here
+        content: req.body.postBody,       // Set content here
         isbn: isbn
     };
 
-    console.log("post")
+    console.log("post");
 
     try {
         const result = await db.query(
@@ -101,13 +101,14 @@ app.post("/compose", async (req, res) => {
 
         res.redirect("/");
 
-        console.log("results")
+        console.log("results");
 
     } catch (error) {
         console.error("Error inserting data into the database:", error);
         res.status(500).send("Internal Server Error");
     }
 });
+
 
 
 // To view individual post in a separate page
