@@ -47,25 +47,24 @@ async function getCoverImageURL(isbn) {
 }
 
 app.get("/", async (req, res) => {
-    // Fetch cover images for all posts
-    for (const post of posts) {
-        post.cover = await getCoverImageURL(post.isbn);
-    }
     try {
         const result = await db.query("SELECT * FROM posts ORDER BY date DESC");
-        posts = result.row;
+        posts = result.rows;
+
+        // Fetch cover images for all posts
+        for (const post of posts) {
+            post.cover = await getCoverImageURL(post.isbn);
+        }
 
         res.render("index", {
             homecontent: homeStartingContent,
             posts: posts
         });
 
-
     } catch (error) {
-        console.log(err);
+        console.error(error);
+        res.status(500).send("Internal Server Error");
     }
-
-  
 });
 
 // getting the compose route
