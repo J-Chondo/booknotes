@@ -91,8 +91,8 @@ app.post("/compose", async (req, res) => {
             "INSERT INTO posts (cover, title, date, recommendation, content, isbn) VALUES($1, $2, $3, $4, $5, $6) RETURNING *"
             [post.cover, post.title, post.date, post.recommendation, post.content, post.isbn]
         );
-        // const newPost = result.rows[0];
-        // posts.push(newPost);
+        const newPost = result.rows[0];
+        posts.push(newPost);
         // posts.push(post);
 
         res.redirect("/");
