@@ -87,6 +87,8 @@ app.post("/compose", async (req, res) => {
         isbn: isbn
     };
 
+    console.log("post")
+
     try {
         const result = await db.query(
             "INSERT INTO posts (cover, title, date, recommendation, content, isbn) VALUES($1, $2, $3, $4, $5, $6) RETURNING *",
@@ -98,6 +100,8 @@ app.post("/compose", async (req, res) => {
         // posts.push(post);
 
         res.redirect("/");
+
+        console.log("results")
 
     } catch (error) {
         console.error("Error inserting data into the database:", error);
