@@ -1,4 +1,3 @@
-
 const express = require("express");
 const bodyparser = require("body-parser");
 const ejs = require("ejs");
@@ -19,19 +18,17 @@ app.use(bodyparser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
 // My introduction statement
-
 const homeStartingContent = "I read a lot of books, but after finishing them, I often don't remember all the most important parts of the book. So, I started taking notes. Then I discovered that keeping my notes on physical books is tiresome. How many books will I store, considering the many books I have read? What if I misplace the book? Or what if I travel and want to brush through my notes? Therefore, here is my web app for storing my notes, book covers, and titles. This brings a solution to my problem.";
 
+// Use the connection string directly
 const db = new pg.Client({
-    username: "booknotesdb_user",
-    Hostname: "dpg-cmpj5uta73kc73bdt840-a",
-    Database: "booknotesdb",
-    Password: "Ln5wMZmeNAIHRxO98z2A0SPpE8JxmkMM",
-    Port: 5432,
-    InternalDatabaseURL: "postgres://booknotesdb_user:Ln5wMZmeNAIHRxO98z2A0SPpE8JxmkMM@dpg-cmpj5uta73kc73bdt840-a/booknotesdb"
+    connectionString: "postgres://booknotesdb_user:Ln5wMZmeNAIHRxO98z2A0SPpE8JxmkMM@dpg-cmpj5uta73kc73bdt840-a/booknotesdb",
 });
 
 db.connect();
+
+// ... rest of your code
+
 
 let posts = [];
 
@@ -95,7 +92,13 @@ app.post("/compose", async (req, res) => {
         const result = await db.query(
             "INSERT INTO posts (cover, title, date, recommendation, content, isbn) VALUES($1, $2, $3, $4, $5, $6) RETURNING *"
             [post.cover, post.title, post.date, post.recommendation, post.content, post.isbn]
-        )
+        );
+        const newPost = result.rows[0];
+        posts.push(newPost);
+        // posts.push(post);
+
+        res.redirect("/");
+
     } catch (error) {
        console.error("error inserting data into the database")
        res.status(500).send("internal server error") 
